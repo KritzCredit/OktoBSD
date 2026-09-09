@@ -1,1 +1,476 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OktoBSD — Надежная, современная ОС на базе FreeBSD</title>
+  
+  <!-- Шрифты Google Fonts: Inter и JetBrains Mono для консоли -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
+  <style>
+    :root {
+      --bg-color: #090d16;
+      --card-bg: rgba(18, 24, 38, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: #38bdf8;        /* Неоновый голубой */
+      --accent-hover: #0ea5e9;
+      --accent-glow: rgba(56, 189, 248, 0.25);
+      --purple: #818cf8;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --terminal-bg: #05080f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Фоновые градиентные круги */
+    .bg-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(140px);
+      z-index: -1;
+      opacity: 0.45;
+      pointer-events: none;
+    }
+    .glow-1 { top: -100px; left: -100px; background: var(--accent); }
+    .glow-2 { top: 40%; right: -150px; background: var(--purple); }
+
+    /* Навигация */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(9, 13, 22, 0.75);
+      border-bottom: 1px solid var(--card-border);
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .logo span {
+      color: var(--accent);
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /* Главный баннер (Hero) */
+    .hero {
+      max-width: 1200px;
+      margin: 4rem auto 6rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: var(--accent);
+      padding: 0.35rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: 3.4rem;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 520px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.6rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #041017;
+      box-shadow: 0 0 25px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Окно терминала */
+    .terminal-card {
+      background: var(--terminal-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .terminal-header {
+      background: #111726;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #eab308; }
+    .dot-green { background: #22c55e; }
+    .terminal-title {
+      margin-left: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .terminal-body {
+      padding: 1.25rem;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+    .prompt-accent { color: var(--accent); }
+    .prompt-cmd { color: #f8fafc; font-weight: 500; }
+    .tag { color: #f472b6; }
+
+    /* Особенности (Features) */
+    .features-section {
+      max-width: 1200px;
+      margin: 0 auto 6rem;
+      padding: 0 1.5rem;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .section-header h2 {
+      font-size: 2.2rem;
+      letter-spacing: -1px;
+      margin-bottom: 0.8rem;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      backdrop-filter: blur(10px);
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: rgba(56, 189, 248, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Секция загрузки (CTA) */
+    .download-section {
+      max-width: 900px;
+      margin: 0 auto 6rem;
+      padding: 3rem 2rem;
+      background: linear-gradient(180deg, rgba(20, 27, 45, 0.6) 0%, rgba(9, 13, 22, 0.9) 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      text-align: center;
+      position: relative;
+    }
+    .download-section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+    .download-section p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Подвал */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Адаптивность для смартфонов */
+    @media (max-width: 868px) {
+      .hero {
+        grid-template-columns: 1fr;
+        margin-top: 2rem;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      nav ul {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+
+  <!-- Шапка -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <i data-lucide="shield"></i> Okto<span>BSD</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#features">Возможности</a></li>
+          <li><a href="#about">О системе</a></li>
+          <li><a href="#download">Скачать</a></li>
+          <li><a href="https://github.com" target="_blank">GitHub</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Главный экран -->
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i data-lucide="sparkles" size="16"></i> Релиз 1.0 уже доступен
+        </div>
+        <h1>Мощь FreeBSD.<br><span class="gradient-text">Современный подход.</span></h1>
+        <p>OktoBSD — независимая операционная система, сочетающая непревзойденную стабильность ядра FreeBSD, файловую систему ZFS и готовность к работе «из коробки» на рабочих станциях и серверах.</p>
+        
+        <div class="hero-buttons">
+          <a href="#download" class="btn btn-primary">
+            <i data-lucide="download"></i> Скачать OktoBSD
+          </a>
+          <a href="#features" class="btn btn-secondary">
+            <i data-lucide="info"></i> Узнать больше
+          </a>
+        </div>
+      </div>
+
+      <!-- Виджет терминала с neofetch -->
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+          <span class="terminal-title">user@oktobsd: ~</span>
+        </div>
+        <div class="terminal-body">
+          <p><span class="prompt-accent">user@oktobsd</span>:<span class="prompt-cmd">~ $</span> oktoconfig --version</p>
+          <p style="color: #64748b; margin-bottom: 0.8rem;">OktoBSD Release 14.1-OKTO (x86_64)</p>
+          <p><span class="prompt-accent">user@oktobsd</span>:<span class="prompt-cmd">~ $</span> oktosys info</p>
+          <pre style="margin-top: 0.5rem; font-family: inherit;">
+<span class="tag">OS:</span>         OktoBSD 1.0 (Based on FreeBSD)
+<span class="tag">Kernel:</span>     14.1-RELEASE-p2
+<span class="tag">Init:</span>       OpenRC / bsdinstall
+<span class="tag">FS:</span>         OpenZFS with Native Encryption
+<span class="tag">Shell:</span>      Zsh 5.9 (Okto-tuned)
+<span class="tag">Security:</span>   Capsicum + Jails Pre-configured
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Секция преимуществ -->
+    <section class="features-section" id="features">
+      <div class="section-header">
+        <h2>Почему именно OktoBSD?</h2>
+        <p>Лучшие черты мира UNIX, переосмысленные для комфорта разработчиков и администраторов.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="card">
+          <div class="card-icon">
+            <i data-lucide="hard-drive"></i>
+          </div>
+          <h3>ZFS по умолчанию</h3>
+          <p>Снимки состояния системы, восстановление в один клик при неудачном обновлении, сжатие на лету и полная целостность данных.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">
+            <i data-lucide="layers"></i>
+          </div>
+          <h3>Изоляция через Jails</h3>
+          <p>Разворачивайте изолированные среды и микросервисы без оверхеда традиционной виртуализации прямо из встроенного менеджера контейнеров.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">
+            <i data-lucide="cpu"></i>
+          </div>
+          <h3>Современные драйверы</h3>
+          <p>Актуальный стек DRM-драйверов графики (Intel, AMD) и улучшенная поддержка Wi-Fi модулей сразу после установки.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">
+            <i data-lucide="box"></i>
+          </div>
+          <h3>Пакетный менеджер pkg+</h3>
+          <p>Мгновенный доступ к десяткам тысяч портов FreeBSD с предварительно скомпилированными оптимизированными бинарными пакетами.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <h3>Безопасность ядра</h3>
+          <p>Использование Capsicum, аудит конфигураций по умолчанию и минимальная поверхность атаки в базовой установке.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">
+            <i data-lucide="sliders"></i>
+          </div>
+          <h3>Простая настройка</h3>
+          <p>Удобные утилиты командной строки для конфигурации сети, звука и видеоадаптеров без необходимости вручную редактировать сложные rc-файлы.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Призыв к загрузке -->
+    <section class="download-section" id="download">
+      <h2>Попробуйте OktoBSD сегодня</h2>
+      <p>Доступны универсальные образы для USB-носителей, инсталляторы серверов и преднастроенные образы для виртуальных машин.</p>
+      
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="#" class="btn btn-primary" onclick="alert('Скачивание начнется при подключении сервера релизов.')">
+          <i data-lucide="download"></i> OktoBSD x86_64 (.ISO)
+        </a>
+        <a href="#" class="btn btn-secondary" onclick="alert('Образы ARM64 (Raspberry Pi / Apple Silicon) в разработке.')">
+          <i data-lucide="cpu"></i> ARM64 Build
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Подвал -->
+  <footer>
+    <p>© 2026 Проект OktoBSD. FreeBSD является зарегистрированным товарным знаком The FreeBSD Foundation.</p>
+  </footer>
+
+  <!-- Инициализация иконок Lucide -->
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
