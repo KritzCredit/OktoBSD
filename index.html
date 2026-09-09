@@ -111,6 +111,10 @@
       grid-template-columns: 1.1fr 0.9fr;
       gap: 3rem;
       align-items: center;
+      
+      /* Защита от распирания сетки широкими элементами и картинками */
+    .hero > * {
+      min-width: 0;
     }
     .hero-badge {
       display: inline-flex;
