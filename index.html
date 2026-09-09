@@ -185,47 +185,25 @@
             text-decoration: underline;
         }
 
-        /* Макет терминала / системы */
+ /* Рамка и отображение скриншота в стиле Apple */
         .device-preview {
             margin: 40px auto 0 auto;
-            max-width: 860px;
-            background: #0d0d0f;
+            max-width: 980px; /* Максимальная ширина на больших экранах */
+            width: 100%;
             border-radius: 18px;
             border: 1px solid var(--border-card);
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(41, 151, 255, 0.08);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(41, 151, 255, 0.12);
             overflow: hidden;
-            text-align: left;
+            line-height: 0; /* Убирает лишний зазор под картинкой */
+            background: #000;
         }
 
-        .terminal-header {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 12px 18px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        .screenshot-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
         }
-
-        .terminal-dots {
-            display: flex;
-            gap: 8px;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .dot.red { background: #ff5f56; }
-        .dot.yellow { background: #ffbd2e; }
-        .dot.green { background: #27c93f; }
-
-        .terminal-body {
-            padding: 24px;
-            font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
-            font-size: 13px;
-            line-height: 1.7;
-            color: #d1d1d6;
         }
 
         .code-accent { color: var(--accent-blue); }
@@ -386,26 +364,9 @@
             <a href="#docs" class="btn-secondary">Documentation &rsaquo;</a>
         </div>
 
-        <!-- Окно терминала / Превью -->
+<!-- Превью системы (Скриншот) -->
         <div class="device-preview">
-            <div class="terminal-header">
-                <div class="terminal-dots">
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
-                </div>
-            </div>
-            <div class="terminal-body">
-                <p><span class="code-accent">root@oktobsd:~ #</span> oktosys --status</p>
-                <p class="code-dim">--------------------------------------------------</p>
-                <p>OS: <span class="code-accent">OktoBSD 14.1-RELEASE-p1 (x86_64 / arm64)</span></p>
-                <p>Kernel: <span class="code-green">14.1-OKTO-ULTRA (Tickless, PREEMPT, LTO enabled)</span></p>
-                <p>Scheduler: <span class="code-accent">Adaptive ULE++ Low-Latency</span></p>
-                <p>FS: <span class="code-green">OpenZFS 2.2.4 (O_DIRECT SIMD Tuning enabled)</span></p>
-                <p>Memory Footprint: <span class="code-green">184 MB at idle</span></p>
-                <p class="code-dim">--------------------------------------------------</p>
-                <p><span class="code-accent">root@oktobsd:~ #</span> Ready for production workload.</p>
-            </div>
+            <img src="screenshot.png" alt="Скриншот интерфейса OktoBSD" class="screenshot-img">
         </div>
     </header>
 
