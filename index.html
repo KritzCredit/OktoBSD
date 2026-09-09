@@ -353,7 +353,7 @@
           <i data-lucide="sparkles" size="16"></i> The system's source code is available!
         </div>
         <h1>Experience the Power of FreeBSD.<br><span class="gradient-text">Manual optimization for multithreading.</span></h1>
-        <p>OktoBSD — независимая операционная система, сочетающая непревзойденную стабильность ядра FreeBSD, файловую систему ZFS и готовность к работе «из коробки» на рабочих станциях и серверах.</p>
+        <p>OktoBSD is a modified version of FreeBSD 15 that features manual optimizations of the kernel and key components. The AMD64 architecture has been optimized for working with small files within ZFS file systems, and ARM64 now runs natively on Apple Silicon computers!</p>
         
         <div class="hero-buttons">
           <a href="#download" class="btn btn-primary">
@@ -374,16 +374,15 @@
           <span class="terminal-title">user@oktobsd: ~</span>
         </div>
         <div class="terminal-body">
-          <p><span class="prompt-accent">user@oktobsd</span>:<span class="prompt-cmd">~ $</span> oktoconfig --version</p>
-          <p style="color: #64748b; margin-bottom: 0.8rem;">OktoBSD Release 14.1-OKTO (x86_64)</p>
-          <p><span class="prompt-accent">user@oktobsd</span>:<span class="prompt-cmd">~ $</span> oktosys info</p>
+          <p><span class="prompt-accent">user@oktobsd</span>:<span class="prompt-cmd">~ $</span> uname -a</p>
+          <p style="color: #64748b; margin-bottom: 0.8rem;">OktoBSD Release 15.1 (x86_64 & ARM64)</p>
+          <p><span class="prompt-accent">user@oktobsd</span>:<span class="prompt-cmd">~ $</span> fastfetch</p>
           <pre style="margin-top: 0.5rem; font-family: inherit;">
-<span class="tag">OS:</span>         OktoBSD 1.0 (Based on FreeBSD)
-<span class="tag">Kernel:</span>     14.1-RELEASE-p2
-<span class="tag">Init:</span>       OpenRC / bsdinstall
+<span class="tag">OS:</span>         OktoBSD UNIX (Based on FreeBSD 15.1)
+<span class="tag">Kernel:</span>     15.1-RELEASE-p3
 <span class="tag">FS:</span>         OpenZFS with Native Encryption
-<span class="tag">Shell:</span>      Zsh 5.9 (Okto-tuned)
-<span class="tag">Security:</span>   Capsicum + Jails Pre-configured
+<span class="tag">Shell:</span>      ZSH 5.9
+<span class="tag">Security:</span>   Jails Pre-Configured!
           </pre>
         </div>
       </div>
@@ -392,8 +391,8 @@
     <!-- Секция преимуществ -->
     <section class="features-section" id="features">
       <div class="section-header">
-        <h2>Почему именно OktoBSD?</h2>
-        <p>Лучшие черты мира UNIX, переосмысленные для комфорта разработчиков и администраторов.</p>
+        <h2>A university project with great potential!</h2>
+        <p>We’ve drawn on the best of the UNIX experience. Inspired by macOS—which, for a quarter of a century, has been the purest form of UNIX available—we’re setting the bar to bring UNIX back to the finest workstations and servers, offering a powerful platform and graphics capabilities.</p>
       </div>
 
       <div class="features-grid">
@@ -401,63 +400,63 @@
           <div class="card-icon">
             <i data-lucide="hard-drive"></i>
           </div>
-          <h3>ZFS по умолчанию</h3>
-          <p>Снимки состояния системы, восстановление в один клик при неудачном обновлении, сжатие на лету и полная целостность данных.</p>
+          <h3>Easy to install!</h3>
+          <p>The system uses automatic hardware detection to install only the necessary drivers and installs the GPU drivers that are compatible with your graphics card.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">
             <i data-lucide="layers"></i>
           </div>
-          <h3>Изоляция через Jails</h3>
-          <p>Разворачивайте изолированные среды и микросервисы без оверхеда традиционной виртуализации прямо из встроенного менеджера контейнеров.</p>
+          <h3>Isolation via Jails</h3>
+          <p>Deploy isolated environments and microservices without the overhead of traditional virtualization, directly from the built-in container manager.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">
             <i data-lucide="cpu"></i>
           </div>
-          <h3>Современные драйверы</h3>
-          <p>Актуальный стек DRM-драйверов графики (Intel, AMD) и улучшенная поддержка Wi-Fi модулей сразу после установки.</p>
+          <h3>ZFS Optimization</h3>
+          <p>ZFS has earned its place in this system, because by analyzing the source code, we were able to boost the performance of SSD/NVMe drives by 20% by removing unnecessary operations typical of hard drives!</p>
         </div>
 
         <div class="card">
           <div class="card-icon">
             <i data-lucide="box"></i>
           </div>
-          <h3>Пакетный менеджер pkg+</h3>
-          <p>Мгновенный доступ к десяткам тысяч портов FreeBSD с предварительно скомпилированными оптимизированными бинарными пакетами.</p>
+          <h3>pkg+ Package Manager</h3>
+          <p>Instant access to tens of thousands of FreeBSD ports with precompiled, optimized binary packages.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">
-            <i data-lucide="shield-check"></i>
+            <i data-lucide=“shield-check”></i>
           </div>
-          <h3>Безопасность ядра</h3>
-          <p>Использование Capsicum, аудит конфигураций по умолчанию и минимальная поверхность атаки в базовой установке.</p>
+          <h3>Kernel Security</h3>
+          <p>Uses Capsicum, audits default configurations, and minimizes the attack surface in the base installation.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">
-            <i data-lucide="sliders"></i>
+            <i data-lucide=“sliders”></i>
           </div>
-          <h3>Простая настройка</h3>
-          <p>Удобные утилиты командной строки для конфигурации сети, звука и видеоадаптеров без необходимости вручную редактировать сложные rc-файлы.</p>
+          <h3>Easy Configuration</h3>
+          <p>Convenient command-line utilities for configuring network, audio, and video adapters without having to manually edit complex rc files.</p>
         </div>
       </div>
     </section>
 
     <!-- Призыв к загрузке -->
     <section class="download-section" id="download">
-      <h2>Попробуйте OktoBSD сегодня</h2>
-      <p>Доступны универсальные образы для USB-носителей, инсталляторы серверов и преднастроенные образы для виртуальных машин.</p>
+      <h2>Explore the kernel source code</h2>
+      <p>The OktoBSD kernel source code is available for download and compilation</p>
       
       <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="#" class="btn btn-primary" onclick="alert('Скачивание начнется при подключении сервера релизов.')">
-          <i data-lucide="download"></i> OktoBSD x86_64 (.ISO)
+        <a href="#" class="btn btn-primary" onclick="alert('x86-64 Kernel')">
+          <i data-lucide="download"></i> x86-64 Kernel
         </a>
-        <a href="#" class="btn btn-secondary" onclick="alert('Образы ARM64 (Raspberry Pi / Apple Silicon) в разработке.')">
-          <i data-lucide="cpu"></i> ARM64 Build
+        <a href="#" class="btn btn-secondary" onclick="alert('ARM64 Kernel')">
+          <i data-lucide="cpu"></i> ARM64 Kernel
         </a>
       </div>
     </section>
@@ -465,7 +464,7 @@
 
   <!-- Подвал -->
   <footer>
-    <p>© 2026 Проект OktoBSD. FreeBSD является зарегистрированным товарным знаком The FreeBSD Foundation.</p>
+    <p>2026, Oktoberfest. This is the showcase for my university project. All rights reserved.</p>
   </footer>
 
   <!-- Инициализация иконок Lucide -->
