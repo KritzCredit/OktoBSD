@@ -1,30 +1,27 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OktoBSD: Ultimate BSD Performance</title>
   
-  <!-- Шрифты Google Fonts: Inter и JetBrains Mono для консоли -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     :root {
-      --bg-color: #090d16;
-      --card-bg: rgba(18, 24, 38, 0.7);
+      --bg: #030712;
+      --card-bg: rgba(15, 23, 42, 0.55);
       --card-border: rgba(255, 255, 255, 0.08);
-      --accent: #38bdf8;        /* Неоновый голубой */
+      --card-border-hover: rgba(56, 189, 248, 0.35);
+      --accent: #38bdf8;
       --accent-hover: #0ea5e9;
-      --accent-glow: rgba(56, 189, 248, 0.25);
-      --purple: #818cf8;
-      --text-main: #f1f5f9;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --terminal-bg: #05080f;
     }
 
     * {
@@ -35,308 +32,352 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-color);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
       color: var(--text-main);
-      overflow-x: hidden;
       line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.15), transparent),
+        radial-gradient(circle at 100% 60%, rgba(99, 102, 241, 0.08), transparent);
     }
 
-    /* Фоновые градиентные круги */
-    .bg-glow {
-      position: fixed;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-imag      filter: blur(140px);
-      z-index: -1;
-      opacity: 0.45;
+    /* Фоновая сетка для глубины */
+    .grid-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      mask-image: linear-gradient(to bottom, black 30%, transparent 80%);
+      -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 80%);
       pointer-events: none;
+      z-index: 0;
     }
-    .glow-1 { top: -100px; left: -100px; background: var(--accent); }
-    .glow-2 { top: 40%; right: -150px; background: var(--purple); }
 
-    /* Навигация */
     header {
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(16px);
-      background: rgba(9, 13, 22, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(3, 7, 18, 0.75);
       border-bottom: 1px solid var(--card-border);
     }
+
     .nav-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 1rem 1.5rem;
+      padding: 1.1rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
     .logo {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 1.3rem;
-      font-weight: 800;
+      gap: 0.75rem;
+      font-size: 1.15rem;
+      font-weight: 700;
       color: #fff;
       text-decoration: none;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.3px;
     }
-    .logo span {
+
+    .logo-badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.1);
       color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.2);
     }
+
     nav ul {
       display: flex;
       list-style: none;
       gap: 2rem;
     }
+
     nav a {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 500;
       transition: color 0.2s ease;
     }
+
     nav a:hover {
-      color: var(--accent);
+      color: var(--text-main);
     }
 
-    /* Главный баннер (Hero) */
+    main {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Hero Section */
     .hero {
       max-width: 1200px;
-      margin: 4rem auto 6rem;
+      margin: 3.5rem auto 6rem;
       padding: 0 1.5rem;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 3rem;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3.5rem;
       align-items: center;
-      
-    }
-    .hero-image-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 520px; /* Ограничивает максимальный размер картинки */
-      margin: 0 auto;
-      border-radius: 16px;
-      padding: 6px;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.3), rgba(255, 255, 255, 0.05));
-      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), 0 0 25px var(--accent-glow);
     }
 
-    .hero-image {
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 12px;
-      border: 1px solid var(--card-border);
-      object-fit: cover;
+    .hero > * {
+      min-width: 0;
     }
+
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.25);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
       color: var(--accent);
-      padding: 0.35rem 0.8rem;
+      padding: 0.4rem 0.9rem;
       border-radius: 9999px;
       font-size: 0.8rem;
       font-weight: 600;
       margin-bottom: 1.5rem;
     }
+
     .hero h1 {
-      font-size: 3.4rem;
+      font-size: 3.2rem;
       line-height: 1.15;
       font-weight: 800;
-      letter-spacing: -1.5px;
-      margin-bottom: 1.5rem;
+      letter-spacing: -1.2px;
+      margin-bottom: 1.25rem;
     }
-    .hero h1 .gradient-text {
-      background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
+
+    .gradient-text {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
     .hero p {
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: var(--text-muted);
-      margin-bottom: 2.5rem;
-      max-width: 520px;
+      margin-bottom: 2rem;
+      line-height: 1.7;
     }
+
     .hero-buttons {
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
     }
+
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      padding: 0.85rem 1.6rem;
-      border-radius: 10px;
+      padding: 0.8rem 1.6rem;
+      border-radius: 12px;
       font-weight: 600;
       font-size: 0.95rem;
       text-decoration: none;
       transition: all 0.2s ease;
       cursor: pointer;
     }
+
     .btn-primary {
-      background: var(--accent);
-      color: #041017;
-      box-shadow: 0 0 25px var(--accent-glow);
+      background: var(--text-main);
+      color: var(--bg);
     }
+
     .btn-primary:hover {
-      background: var(--accent-hover);
+      background: #e2e8f0;
       transform: translateY(-2px);
     }
+
     .btn-secondary {
-      background: var(--card-bg);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--card-border);
       color: var(--text-main);
     }
+
     .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.08);
       border-color: rgba(255, 255, 255, 0.2);
     }
 
-    /* Окно терминала */
-    .terminal-card {
-      background: var(--terminal-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
+    /* Современный мокап окна со скриншотом */
+    .hero-image-wrapper {
+      position: relative;
+      border-radius: 18px;
+      background: #090d16;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.8),
+        0 0 40px rgba(56, 189, 248, 0.1);
       overflow: hidden;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-      font-family: 'JetBrains Mono', monospace;
     }
-    .terminal-header {
-      background: #111726;
+
+    .window-header {
+      background: rgba(15, 23, 42, 0.8);
       padding: 0.75rem 1rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.45rem;
       border-bottom: 1px solid var(--card-border);
     }
+
     .dot {
-      width: 11px;
-      height: 11px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
     }
-    .dot-red { background: #ef4444; }
-    .dot-yellow { background: #eab308; }
-    .dot-green { background: #22c55e; }
-    .terminal-title {
-      margin-left: 0.5rem;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-    .terminal-body {
-      padding: 1.25rem;
-      font-size: 0.85rem;
-      color: #cbd5e1;
-      line-height: 1.7;
-    }
-    .prompt-accent { color: var(--accent); }
-    .prompt-cmd { color: #f8fafc; font-weight: 500; }
-    .tag { color: #f472b6; }
+    .dot-1 { background: rgba(239, 68, 68, 0.7); }
+    .dot-2 { background: rgba(234, 179, 8, 0.7); }
+    .dot-3 { background: rgba(34, 197, 94, 0.7); }
 
-    /* Особенности (Features) */
+    .window-title {
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      margin-left: 0.5rem;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Features Section */
     .features-section {
       max-width: 1200px;
-      margin: 0 auto 6rem;
+      margin: 0 auto 7rem;
       padding: 0 1.5rem;
     }
+
     .section-header {
       text-align: center;
-      margin-bottom: 3.5rem;
+      margin-bottom: 4rem;
     }
+
     .section-header h2 {
       font-size: 2.2rem;
-      letter-spacing: -1px;
-      margin-bottom: 0.8rem;
+      letter-spacing: -0.8px;
+      margin-bottom: 1rem;
     }
+
     .section-header p {
       color: var(--text-muted);
       font-size: 1.05rem;
+      max-width: 650px;
+      margin: 0 auto;
     }
+
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
+
     .card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 1.75rem;
-      backdrop-filter: blur(10px);
-      transition: transform 0.25s ease, border-color 0.25s ease;
+      border-radius: 18px;
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
     }
+
     .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(56, 189, 248, 0.4);
+      border-color: var(--card-border-hover);
+      transform: translateY(-3px);
+      background: rgba(18, 28, 51, 0.7);
     }
+
     .card-icon {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 10px;
       background: rgba(56, 189, 248, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--accent);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(56, 189, 248, 0.2);
     }
+
     .card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.15rem;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.2px;
     }
+
     .card p {
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.6;
     }
 
-    /* Секция загрузки (CTA) */
+    /* Download Section */
     .download-section {
-      max-width: 900px;
-      margin: 0 auto 6rem;
-      padding: 3rem 2rem;
-      background: linear-gradient(180deg, rgba(20, 27, 45, 0.6) 0%, rgba(9, 13, 22, 0.9) 100%);
+      max-width: 850px;
+      margin: 0 auto 7rem;
+      padding: 3.5rem 2rem;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(3, 7, 18, 0.9) 100%);
       border: 1px solid var(--card-border);
       border-radius: 24px;
       text-align: center;
       position: relative;
     }
+
     .download-section h2 {
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
     }
+
     .download-section p {
       color: var(--text-muted);
       margin-bottom: 2rem;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
-    /* Подвал */
     footer {
       border-top: 1px solid var(--card-border);
-      padding: 2.5rem 1.5rem;
+      padding: 2rem 1.5rem;
       text-align: center;
-      color: var(--text-muted);
-      font-size: 0.9rem;
+      color: #64748b;
+      font-size: 0.85rem;
     }
 
-    /* Адаптивность для смартфонов */
-    @media (max-width: 868px) {
+    @media (max-width: 992px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
       .hero {
         grid-template-columns: 1fr;
         margin-top: 2rem;
+        gap: 2.5rem;
       }
       .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
       }
       nav ul {
         display: none;
@@ -346,14 +387,12 @@ imag      filter: blur(140px);
 </head>
 <body>
 
-  <div class="bg-glow glow-1"></div>
-  <div class="bg-glow glow-2"></div>
+  <div class="grid-pattern"></div>
 
-  <!-- Шапка -->
   <header>
     <div class="nav-container">
       <a href="#" class="logo">
-        <i data-lucide="shield"></i> OktoBSD UNIX Operating System</span>
+        <i data-lucide="shield"></i> OktoBSD <span class="logo-badge">BSD-based UNIX Operating System</span>
       </a>
       <nav>
         <ul>
@@ -366,15 +405,14 @@ imag      filter: blur(140px);
     </div>
   </header>
 
-  <!-- Главный экран -->
   <main>
     <section class="hero">
       <div class="hero-content">
         <div class="hero-badge">
-          <i data-lucide="sparkles" size="16"></i> The system's source code is available!
+          <i data-lucide="sparkles" size="14"></i> The system's source code is available!
         </div>
-        <h1>Experience the Power of FreeBSD.<br><span class="gradient-text">Manual optimization for multithreading.</span></h1>
-        <p>OktoBSD is a modified version of FreeBSD 15 that features manual optimizations of the kernel and key components. The AMD64 architecture has been optimized for working with small files within ZFS file systems, and ARM64 now runs natively on Apple Silicon computers!</p>
+        <h1>The Power of UNIX.<br><span class="gradient-text">Optimized for Multithreading.</span></h1>
+        <p>OktoBSD is a modified version of FreeBSD 15 with tuned kernel internals. Featuring enhanced small-file performance on OpenZFS for AMD64, alongside full native support on Apple Silicon.</p>
         
         <div class="hero-buttons">
           <a href="#download" class="btn btn-primary">
@@ -386,16 +424,23 @@ imag      filter: blur(140px);
         </div>
       </div>
 
-<!-- Контейнер с изображением -->
+      <!-- Стилизованное окно со скриншотом системы -->
       <div class="hero-image-wrapper">
+        <div class="window-header">
+          <span class="dot dot-1"></span>
+          <span class="dot dot-2"></span>
+          <span class="dot dot-3"></span>
+          <span class="window-title">oktobsd-desktop — 1920x1080</span>
+        </div>
         <img src="screenshot.png" alt="Интерфейс OktoBSD" class="hero-image">
       </div>
+    </section>
 
     <!-- Секция преимуществ -->
     <section class="features-section" id="features">
       <div class="section-header">
         <h2>A university project with great potential!</h2>
-        <p>We’ve drawn on the best of the UNIX experience. Inspired by macOS—which, for a quarter of a century, has been the purest form of UNIX available—we’re setting the bar to bring UNIX back to the finest workstations and servers, offering a powerful platform and graphics capabilities.</p>
+        <p>Inspired by the best UNIX workstation designs. Bringing high performance, reliable graphics stacks, and kernel-level optimizations back to servers and dev machines.</p>
       </div>
 
       <div class="features-grid">
@@ -404,7 +449,7 @@ imag      filter: blur(140px);
             <i data-lucide="hard-drive"></i>
           </div>
           <h3>Easy to install!</h3>
-          <p>The system uses automatic hardware detection to install only the necessary drivers and installs the GPU drivers that are compatible with your graphics card.</p>
+          <p>Automatic hardware detection installs only required drivers, instantly pairing the right graphics stack with your display architecture.</p>
         </div>
 
         <div class="card">
@@ -412,7 +457,7 @@ imag      filter: blur(140px);
             <i data-lucide="layers"></i>
           </div>
           <h3>Isolation via Jails</h3>
-          <p>Deploy isolated environments and microservices without the overhead of traditional virtualization, directly from the built-in container manager.</p>
+          <p>Deploy lightweight isolated environments and microservices without the overhead of heavy virtualization via our integrated manager.</p>
         </div>
 
         <div class="card">
@@ -420,7 +465,7 @@ imag      filter: blur(140px);
             <i data-lucide="cpu"></i>
           </div>
           <h3>ZFS Optimization</h3>
-          <p>ZFS has earned its place in this system, because by analyzing the source code, we were able to boost the performance of SSD/NVMe drives by 20% by removing unnecessary operations typical of hard drives!</p>
+          <p>Boosted SSD/NVMe read-write operations by up to 20% by stripping legacy mechanical disk operations directly from the FS pipeline.</p>
         </div>
 
         <div class="card">
@@ -428,23 +473,23 @@ imag      filter: blur(140px);
             <i data-lucide="box"></i>
           </div>
           <h3>pkg+ Package Manager</h3>
-          <p>Instant access to tens of thousands of FreeBSD ports with precompiled, optimized binary packages.</p>
+          <p>Direct access to the vast FreeBSD ports ecosystem with precompiled, architecture-specific binaries tuned for speed.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">
-            <i data-lucide=“shield-check”></i>
+            <i data-lucide="shield-check"></i>
           </div>
           <h3>Kernel Security</h3>
-          <p>Uses Capsicum, audits default configurations, and minimizes the attack surface in the base installation.</p>
+          <p>Hardened Capsicum sandboxing, strict default audit controls, and minimal exposure footprint in clean baseline installations.</p>
         </div>
 
         <div class="card">
           <div class="card-icon">
-            <i data-lucide=“sliders”></i>
+            <i data-lucide="sliders"></i>
           </div>
           <h3>Easy Configuration</h3>
-          <p>Convenient command-line utilities for configuring network, audio, and video adapters without having to manually edit complex rc files.</p>
+          <p>User-friendly utilities for networking, displays, and audio control without digging through complex <code>rc.conf</code> directives.</p>
         </div>
       </div>
     </section>
@@ -452,25 +497,23 @@ imag      filter: blur(140px);
     <!-- Призыв к загрузке -->
     <section class="download-section" id="download">
       <h2>Explore the kernel source code</h2>
-      <p>The OktoBSD kernel source code is available for download and compilation</p>
+      <p>The OktoBSD kernel tree is open for contributions, testing, and independent compilation.</p>
       
       <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="#" class="btn btn-primary" onclick="alert('x86-64 Kernel')">
+        <a href="#" class="btn btn-primary" onclick="alert('x86-64 Kernel Source')">
           <i data-lucide="download"></i> x86-64 Kernel
         </a>
-        <a href="#" class="btn btn-secondary" onclick="alert('ARM64 Kernel')">
+        <a href="#" class="btn btn-secondary" onclick="alert('ARM64 Kernel Source')">
           <i data-lucide="cpu"></i> ARM64 Kernel
         </a>
       </div>
     </section>
   </main>
 
-  <!-- Подвал -->
   <footer>
-    <p>2026, Oktoberfest. This is the showcase for my university project. All rights reserved.</p>
+    <p>© 2026 Oktoberfest. Showcase for university research project. All rights reserved.</p>
   </footer>
 
-  <!-- Инициализация иконок Lucide -->
   <script>
     lucide.createIcons();
   </script>
