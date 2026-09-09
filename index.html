@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OktoBSD — Невероятная мощь. Фундамент FreeBSD.</title>
+    <title>Introducing OktoBSD</title>
     <style>
         :root {
             --bg-black: #000000;
@@ -377,13 +377,13 @@
 
     <!-- Главный экран (Hero) -->
     <header class="section hero">
-        <span class="hero-badge">Представляем OktoBSD 14.1</span>
-        <h1 class="hero-title">Гениально быстрая.<br>Безупречно стабильная.</h1>
-        <p class="hero-subtitle">Вся надежность FreeBSD, переработанная для максимального отклика, сверхнизких задержек и раскрытия потенциала современных процессоров.</p>
+        <span class="hero-badge">OktoBSD: BSD-based UNIX Operating System</span>
+        <h1 class="hero-title">The Power of UNIX.</h1>
+        <p class="hero-subtitle">This is my personal university project, a combination of classic UNIX with modern optimizations designed to minimize latency on servers and professional multi-core workstations.</p>
         
         <div class="cta-group">
-            <a href="#download" class="btn-primary">Загрузить образ</a>
-            <a href="#docs" class="btn-secondary">Читать документацию &rsaquo;</a>
+            <a href="#download" class="btn-primary">Explore the Source code</a>
+            <a href="#docs" class="btn-secondary">Documentation &rsaquo;</a>
         </div>
 
         <!-- Окно терминала / Превью -->
@@ -411,59 +411,58 @@
 
     <!-- Секция Bento Grid (Архитектура и инновации) -->
     <section class="section" id="performance">
-        <h2 style="font-size: 14px; font-weight: 600; color: var(--accent-blue); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.05em;">Оптимизация на уровне кремния</h2>
-        <p style="font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 50px;">Переосмыслена до последнего байта.</p>
+        <h2 style="font-size: 14px; font-weight: 600; color: var(--accent-blue); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.05em;">Manual kernel optimization</h2>
+        <p style="font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 50px;">Turn your computer into a real workstation.</p>
 
         <div class="bento-grid">
-            <!-- Карточка 1: Планировщик -->
+            <!-- Card 1: Scheduler -->
             <div class="bento-card col-8">
-                <span class="card-label">Ядро и Планировщик</span>
-                <h3 class="card-title">Tickless Kernel & Модифицированный ULE++</h3>
-                <p class="card-desc">Мы отключили периодические системные прерывания таймера в режиме простоя и переписали алгоритм балансировки потоков. Результат — мгновенный отклик интерактивных задач и полное устранение джиттера задержки.</p>
-                <div class="stat-large">-42%</div>
-                <p class="card-desc" style="color: #fff; font-weight: 500;">Снижение системного джиттера под экстремальной нагрузкой.</p>
+                <span class="card-label">Kernel and Scheduler</span>
+                <h3 class="card-title">Tickless Kernel & Modified ULE++</h3>
+                <p class="card-desc">We disabled periodic system timer interrupts during idle time and reimplemented the thread scheduling algorithm. The result is instantaneous response to interactive tasks and complete elimination of latency jitter.</p>
+                <div class="stat-large">-14%</div>
+                <p class="card-desc" style="color: #fff; font-weight: 500;">Reduction in system jitter under extreme load.</p>
             </div>
 
-            <!-- Карточка 2: Сборка -->
+            <!-- Card 2: Build -->
             <div class="bento-card col-4">
-                <span class="card-label">Компиляция</span>
-                <h3 class="card-title">LTO & PGO Оптимизации</h3>
-                <p class="card-desc">Все системные бинарные файлы собраны компилятором LLVM с межмодульной оптимизацией (Link-Time Optimization).</p>
-                <div class="stat-large">+28%</div>
-                <p class="card-desc" style="color: #fff; font-weight: 500;">Прирост пропускной способности IPC.</p>
+                <span class="card-label">Compilation</span>
+                <h3 class="card-title">LTO & PGO Optimizations</h3>
+                <p class="card-desc">All system binaries are compiled by the LLVM compiler with link-time optimization (LTO).</p>
+                <div class="stat-large">+10%</div>
+                <p class="card-desc" style="color: #fff; font-weight: 500;">IPC throughput gain.</p>
             </div>
 
-            <!-- Карточка 3: Память -->
+            <!-- Card 3: Memory -->
             <div class="bento-card col-4">
-                <span class="card-label">Менеджмент RAM</span>
+                <span class="card-label">RAM Management</span>
                 <h3 class="card-title">jemalloc Pro</h3>
-                <p class="card-desc">Кастомные профили аллокации для серверных задач высокой плотности.</p>
+                <p class="card-desc">Custom allocation profiles for high-density server workloads.</p>
             </div>
 
-            <!-- Карточка 4: ZFS -->
+            <!-- Card 4: ZFS -->
             <div class="bento-card col-8">
-                <span class="card-label">Подсистема хранения</span>
-                <h3 class="card-title">ZFS, настроенная для NVMe Gen 4 и Gen 5</h3>
-                <p class="card-desc">ARC-кэш оптимизирован под современные многоядерные архитектуры NUMA. Асинхронные очереди сброса метаданных предотвращают микрофризы при параллельной записи петабайтов данных.</p>
+                <span class="card-label">Storage subsystem</span>
+                <h3 class="card-title">ZFS, optimized for NVMe & SSD</h3>
+                <p class="card-desc">The ARC cache is optimized for modern multi-core NUMA architectures. Asynchronous metadata flush queues prevent microfreezes during parallel writing of petabytes of data.</p>
             </div>
 
-            <!-- Карточка 5: Сеть -->
+            <!-- Card 5: Networking -->
             <div class="bento-card col-12 pro-banner" style="text-align: center;">
-                <span class="card-label">Сетевой стек</span>
-                <h3 class="card-title" style="font-size: 36px;">Сетевая производительность линейной скорости.</h3>
-                <p class="card-desc" style="max-width: 640px; margin: 0 auto 20px auto;">Интеграция сетевого фреймворка Netmap с аппаратным ускорением позволяет обрабатывать миллионы пакетов в секунду (Mpps) на одном ядре CPU без перегрузки ОС.</p>
-                <a href="#benchmarks" class="btn-secondary" style="justify-content: center;">Посмотреть бенчмарки сетевого стека &rsaquo;</a>
+                <span class="card-label">Network Stack</span>
+                <h3 class="card-title" style="font-size: 36px;">Linear-speed network performance.</h3>
+                <p class="card-desc" style="max-width: 640px; margin: 0 auto 20px auto;">The integration of the hardware-accelerated Netmap networking framework enables the processing of millions of packets per second (Mpps) on a single CPU core without overloading the OS.</p>
             </div>
         </div>
     </section>
 
     <!-- Секция Скачивания -->
     <section class="section" id="download" style="padding-top: 60px;">
-        <h2 style="font-size: clamp(36px, 5vw, 56px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px;">Перейдите на OktoBSD.</h2>
-        <p style="color: var(--text-secondary); font-size: 18px; margin-bottom: 36px;">Готовые оптимизированные образы для архитектур x86_64 и ARM64.</p>
+        <h2 style="font-size: clamp(36px, 5vw, 56px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px;">Explore the Source code of OktoBSD</h2>
+        <p style="color: var(--text-secondary); font-size: 18px; margin-bottom: 36px;">Explore and research source code of OktoBSD Kernel. .ISO images with GUI and GPU Drives will be released later.</p>
         <div class="cta-group">
-            <a href="#" class="btn-primary">Скачать .ISO (x86_64)</a>
-            <a href="#" class="btn-primary" style="background: transparent; color: #fff; border: 1px solid var(--border-card);">Скачать .ISO (ARM64)</a>
+            <a href="#" class="btn-primary">Github repository</a>
+            <a href="#" class="btn-primary" style="background: transparent; color: #fff; border: 1px solid var(--border-card);">Download .ZIP</a>
         </div>
     </section>
 
@@ -471,16 +470,16 @@
     <footer>
         <div class="footer-content">
             <div class="footer-disclaimer">
-                <p>1. Показатели производительности получены в тестовой лаборатории OktoBSD по сравнению со стандартным дистрибутивом FreeBSD 14.0-RELEASE на серверах архитектуры AMD EPYC 9654 и Apple Silicon M-серии. Фактическая скорость может варьироваться в зависимости от конфигурации системы.</p>
-                <p>2. FreeBSD является зарегистрированным товарным знаком FreeBSD Foundation. OktoBSD является независимым форк-проектом с открытым исходным кодом и не спонсируется FreeBSD Foundation.</p>
+                <p>1. This project and website are my personal project for future university degree and are updated at a moderate pace. Performance measurements were taken on an x86-64 CPU: Ryzen 5950X, 64GB DDR4, NVIDIA RTX 4060 Ti. Performance on ARM64 (Apple Silicon) may vary.</p>
+                <p>2. FreeBSD is a registered trademark of the FreeBSD Foundation. OktoBSD is an independent, open-source fork project and is not sponsored by the FreeBSD Foundation.</p>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Проект OktoBSD. Все права защищены.</p>
+                <p>2026 Oktoberfest, OktoBSD. All Rights Reserved.</p>
                 <div class="footer-links">
-                    <a href="#">Политика конфиденциальности</a>
-                    <a href="#">Условия использования</a>
-                    <a href="#">GitHub Репозиторий</a>
-                    <a href="#">Архитектура ядра</a>
+                    <a href="#">Telegram</a>
+                    <a href="#">Discord</a>
+                    <a href="#">Steam</a>
+                    <a href="#">Privacy Policy</a>
                 </div>
             </div>
         </div>
