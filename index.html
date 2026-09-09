@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OktoBSD: Ultimate BSD Performance</title>
   
+  <!-- Шрифты Google Fonts: Plus Jakarta Sans и JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -213,47 +215,22 @@
       border-color: rgba(255, 255, 255, 0.2);
     }
 
-    /* Современный мокап окна со скриншотом */
+    /* Чистое изображение без оконных рамок */
     .hero-image-wrapper {
-      position: relative;
-      border-radius: 18px;
-      background: #090d16;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 
-        0 25px 50px -12px rgba(0, 0, 0, 0.8),
-        0 0 40px rgba(56, 189, 248, 0.1);
-      overflow: hidden;
-    }
-
-    .window-header {
-      background: rgba(15, 23, 42, 0.8);
-      padding: 0.75rem 1rem;
+      width: 100%;
       display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      border-bottom: 1px solid var(--card-border);
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-    .dot-1 { background: rgba(239, 68, 68, 0.7); }
-    .dot-2 { background: rgba(234, 179, 8, 0.7); }
-    .dot-3 { background: rgba(34, 197, 94, 0.7); }
-
-    .window-title {
-      font-size: 0.75rem;
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--text-muted);
-      margin-left: 0.5rem;
+      justify-content: center;
     }
 
     .hero-image {
       width: 100%;
       height: auto;
       display: block;
+      border-radius: 16px;
+      box-shadow: 
+        0 20px 40px -15px rgba(0, 0, 0, 0.8),
+        0 0 35px rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       object-fit: cover;
     }
 
@@ -389,34 +366,36 @@
 
   <div class="grid-pattern"></div>
 
+  <!-- Шапка сайта -->
   <header>
     <div class="nav-container">
       <a href="#" class="logo">
-        <i data-lucide="shield"></i> OktoBSD <span class="logo-badge">BSD-based UNIX Operating System</span>
+        <i data-lucide="shield"></i> OktoBSD <span class="logo-badge">UNIX OS</span>
       </a>
       <nav>
         <ul>
           <li><a href="#features">Features</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#download">Download</a></li>
-          <li><a href="https://github.com" target="_blank">GitHub</a></li>
+          <li><a href="https://github.com/KritzCredit/OktoBSD/tree/main" target="_blank" rel="noopener noreferrer">GitHub</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero">
+    <!-- Главный экран -->
+    <section class="hero" id="about">
       <div class="hero-content">
         <div class="hero-badge">
           <i data-lucide="sparkles" size="14"></i> The system's source code is available!
         </div>
-        <h1>The Power of UNIX.<br><span class="gradient-text">Optimized for Multithreading.</span></h1>
-        <p>OktoBSD is a modified version of FreeBSD 15 with tuned kernel internals. Featuring enhanced small-file performance on OpenZFS for AMD64, alongside full native support on Apple Silicon.</p>
+        <h1>Experience the Power of FreeBSD.<br><span class="gradient-text">Optimized for Multithreading.</span></h1>
+        <p>OktoBSD is a modified version of FreeBSD 15 that features manual optimizations of the kernel and key components. The AMD64 architecture has been optimized for working with small files within ZFS file systems, and ARM64 now runs natively on Apple Silicon computers!</p>
         
         <div class="hero-buttons">
-          <a href="#download" class="btn btn-primary">
-            <i data-lucide="download"></i> Source code
+          <a href="https://github.com/KritzCredit/OktoBSD/tree/main" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i data-lucide="github"></i> Source code
           </a>
           <a href="#features" class="btn btn-secondary">
             <i data-lucide="info"></i> Learn more
@@ -424,16 +403,17 @@
         </div>
       </div>
 
-      <!-- Стилизованное окно со скриншотом системы -->
-<div class="hero-image-wrapper">
+      <!-- Скриншот без рамки окна -->
+      <div class="hero-image-wrapper">
         <img src="screenshot.png" alt="OktoBSD Interface" class="hero-image">
       </div>
+    </section>
 
     <!-- Секция преимуществ -->
     <section class="features-section" id="features">
       <div class="section-header">
         <h2>A university project with great potential!</h2>
-        <p>Inspired by the best UNIX workstation designs. Bringing high performance, reliable graphics stacks, and kernel-level optimizations back to servers and dev machines.</p>
+        <p>We’ve drawn on the best of the UNIX experience. Inspired by macOS—which, for a quarter of a century, has been the purest form of UNIX available—we’re setting the bar to bring UNIX back to the finest workstations and servers, offering a powerful platform and graphics capabilities.</p>
       </div>
 
       <div class="features-grid">
@@ -442,7 +422,7 @@
             <i data-lucide="hard-drive"></i>
           </div>
           <h3>Easy to install!</h3>
-          <p>Automatic hardware detection installs only required drivers, instantly pairing the right graphics stack with your display architecture.</p>
+          <p>The system uses automatic hardware detection to install only the necessary drivers and installs the GPU drivers that are compatible with your graphics card.</p>
         </div>
 
         <div class="card">
@@ -450,7 +430,7 @@
             <i data-lucide="layers"></i>
           </div>
           <h3>Isolation via Jails</h3>
-          <p>Deploy lightweight isolated environments and microservices without the overhead of heavy virtualization via our integrated manager.</p>
+          <p>Deploy isolated environments and microservices without the overhead of traditional virtualization, directly from the built-in container manager.</p>
         </div>
 
         <div class="card">
@@ -458,7 +438,7 @@
             <i data-lucide="cpu"></i>
           </div>
           <h3>ZFS Optimization</h3>
-          <p>Boosted SSD/NVMe read-write operations by up to 20% by stripping legacy mechanical disk operations directly from the FS pipeline.</p>
+          <p>ZFS has earned its place in this system, because by analyzing the source code, we were able to boost the performance of SSD/NVMe drives by 20% by removing unnecessary operations typical of hard drives!</p>
         </div>
 
         <div class="card">
@@ -466,7 +446,7 @@
             <i data-lucide="box"></i>
           </div>
           <h3>pkg+ Package Manager</h3>
-          <p>Direct access to the vast FreeBSD ports ecosystem with precompiled, architecture-specific binaries tuned for speed.</p>
+          <p>Instant access to tens of thousands of FreeBSD ports with precompiled, optimized binary packages.</p>
         </div>
 
         <div class="card">
@@ -474,7 +454,7 @@
             <i data-lucide="shield-check"></i>
           </div>
           <h3>Kernel Security</h3>
-          <p>Hardened Capsicum sandboxing, strict default audit controls, and minimal exposure footprint in clean baseline installations.</p>
+          <p>Uses Capsicum, audits default configurations, and minimizes the attack surface in the base installation.</p>
         </div>
 
         <div class="card">
@@ -482,12 +462,12 @@
             <i data-lucide="sliders"></i>
           </div>
           <h3>Easy Configuration</h3>
-          <p>User-friendly utilities for networking, displays, and audio control without digging through complex <code>rc.conf</code> directives.</p>
+          <p>Convenient command-line utilities for configuring network, audio, and video adapters without having to manually edit complex rc files.</p>
         </div>
       </div>
     </section>
 
-<!-- Секция с кодом -->
+    <!-- Секция ссылок на репозиторий -->
     <section class="download-section" id="download">
       <h2>Explore the kernel source code</h2>
       <p>The OktoBSD kernel tree is open for contributions, testing, and independent compilation.</p>
@@ -501,11 +481,14 @@
         </a>
       </div>
     </section>
+  </main>
 
+  <!-- Подвал -->
   <footer>
-    <p>© 2026 Oktoberfest. Showcase for university research project. All rights reserved.</p>
+    <p>© 2026 Oktoberfest. This is the showcase for my university project. All rights reserved.</p>
   </footer>
 
+  <!-- Инициализация иконок Lucide -->
   <script>
     lucide.createIcons();
   </script>
